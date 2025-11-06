@@ -1,55 +1,62 @@
-# Prerequisites
-*.d
+# PlatformIO
+.pio/
+.vscode/
+.pioenvs/
+.piolibdeps/
 
-# Object files
-*.o
-*.ko
-*.obj
+# Secret credentials
+include/secrets.h
+
+
+# Keep template files (these should be committed)
+!include/secrets_template.h
+!secrets_template.h
+
+# Build artifacts
+build/
+*.bin
 *.elf
-
-# Linker output
-*.ilk
 *.map
-*.exp
 
-# Precompiled Headers
-*.gch
-*.pch
+# IDE files
+.vscode/
+*.code-workspace
+.idea/
+*.iml
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Logs and debug files
+*.log
+debug.txt
+serial_output.txt
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Backup files
+*.backup
+*.bak
+*~
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Documentation build
+docs/_build/
+site/
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
 
-# debug information files
-*.dwo
+# Node.js (if used for tooling)
+node_modules/
+npm-debug.log
+
+# Test artifacts
+test_results/
+coverage/

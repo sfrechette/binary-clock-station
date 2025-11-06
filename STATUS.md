@@ -44,7 +44,7 @@ The current optimized code includes:
 2. ✅ GPIO 0 button toggles time display at bottom
 3. ✅ GPIO 14 button cycles through 6 brightness levels (25, 75, 125, 175, 225, 255)
 4. ✅ No screen flickering (state-based rendering)
-5. ✅ WiFi credentials in secret.h (not committed)
+5. ✅ WiFi credentials in secrets.h (not committed)
 6. ✅ Centered display with proper spacing
 7. ✅ Default: Time display OFF, Brightness level 1 (25/255)
 
@@ -71,7 +71,8 @@ src/
 └── main.cpp                  # Main program (clean & simple)
 
 include/
-└── secret.h                  # WiFi credentials (gitignored)
+├── secrets.h                 # WiFi credentials (gitignored)
+└── secrets_template.h        # Template for secrets.h
 ```
 
 ## Performance Characteristics

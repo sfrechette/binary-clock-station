@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <time.h>
 #include <TFT_eSPI.h>
-#include "secret.h"
+#include "secrets.h"
 #include "config.h"
 #include "BinaryClockDisplay.h"
 #include "ButtonController.h"

@@ -136,7 +136,7 @@ All original features remain fully functional:
 | GPIO 14 button | ✅ Working | Cycle 6 brightness levels |
 | No flickering | ✅ Working | State-based rendering |
 | Centered display | ✅ Working | Pre-calculated layout |
-| WiFi credentials | ✅ Secure | In secret.h (gitignored) |
+| WiFi credentials | ✅ Secure | In secrets.h (gitignored) |
 | NTP time sync | ✅ Working | Auto-sync on startup |
 | Serial debugging | ✅ Working | Clear, informative messages |
 

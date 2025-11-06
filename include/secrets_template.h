@@ -1,8 +1,8 @@
-#ifndef SECRET_H
-#define SECRET_H
+#ifndef SECRETS_H
+#define SECRETS_H
 
 // WiFi credentials
-// Copy this file to secret.h and fill in your credentials
+// Copy this file to secrets.h and fill in your credentials
 const char* WIFI_SSID = "your_wifi_ssid";
 const char* WIFI_PASS = "your_wifi_password";
 
