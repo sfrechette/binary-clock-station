@@ -3,6 +3,7 @@
 ## Files Created
 
 ### Core Modules
+
 1. **`config.h`** - Centralized configuration (53 lines)
    - All constants in one place
    - Easy to modify settings
@@ -24,8 +25,9 @@
    - Easy to maintain
 
 ### Documentation
-5. **`OPTIMIZATION.md`** - Detailed optimization guide
-6. **`REFACTOR_SUMMARY.md`** - This file
+
+1. **`OPTIMIZATION.md`** - Detailed optimization guide
+2. **`REFACTOR_SUMMARY.md`** - This file
 
 ## Key Improvements
 
@@ -65,6 +67,7 @@
 ### 🚀 Performance Optimizations
 
 1. **Pre-computation**
+
    ```cpp
    // Before: Calculated every frame
    int x = (SCREEN_W - totalWidth) / 2;
@@ -74,12 +77,14 @@
    ```
 
 2. **Reduced Allocations**
+
    ```cpp
    // Before: char buf[16]; snprintf() every frame
    // After: Stack-allocated char[2], reused
    ```
 
 3. **Smart Updates**
+
    ```cpp
    // Before: Always redraw
    // After: Only when time changes or state changes
@@ -87,6 +92,7 @@
    ```
 
 4. **Efficient Data Types**
+
    ```cpp
    // Before: int everywhere (32-bit)
    // After: uint8_t for small values (8-bit)
@@ -96,6 +102,7 @@
 ### 🛠️ Code Quality
 
 **Before:**
+
 ```cpp
 // Scattered globals
 bool showTime = false;
@@ -105,6 +112,7 @@ static unsigned long lastBootButtonPress = 0;
 ```
 
 **After:**
+
 ```cpp
 // Organized state
 static struct {
@@ -119,6 +127,7 @@ static struct {
 ### 📦 Encapsulation Benefits
 
 **Before:**
+
 ```cpp
 // In main.cpp - everything exposed
 void drawBCDDigit(uint8_t value, const DigitLayout& L) { ... }
@@ -126,6 +135,7 @@ void drawBCDDigit(uint8_t value, const DigitLayout& L) { ... }
 ```
 
 **After:**
+
 ```cpp
 // In BinaryClockDisplay class - internal implementation
 private:
@@ -136,24 +146,29 @@ private:
 ## Migration Guide
 
 ### Step 1: Backup Current Version
+
 ```bash
-cd /Users/stephanefrechette/Documents/PlatformIO/Projects/binary-clock/src
+cd /Users/stephanefrechette/Documents/PlatformIO/Projects/binary-clock-station/src
 cp main.cpp main_original.cpp
 ```
 
 ### Step 2: Switch to Optimized
+
 ```bash
 mv main_optimized.cpp main.cpp
 ```
 
 ### Step 3: Build and Test
+
 ```bash
 cd ..
 pio run --target upload
 ```
 
 ### Step 4: Monitor Performance
+
 Open Serial Monitor and observe:
+
 - Faster startup
 - Cleaner debug output
 - Same functionality
@@ -161,6 +176,7 @@ Open Serial Monitor and observe:
 ## Rollback Procedure
 
 If you need to go back:
+
 ```bash
 cd src
 mv main.cpp main_optimized.cpp
@@ -171,6 +187,7 @@ pio run --target upload
 ## Feature Compatibility
 
 ✅ **All features preserved:**
+
 - Binary clock display
 - Time digit toggle (GPIO 0)
 - Brightness cycling (GPIO 14)
@@ -180,12 +197,14 @@ pio run --target upload
 - Smooth updates
 
 ✅ **Identical behavior:**
+
 - Same visual appearance
 - Same button response
 - Same timing
 - Same functionality
 
 ✅ **Plus improvements:**
+
 - Faster performance
 - Lower memory usage
 - Better code organization
@@ -194,18 +213,21 @@ pio run --target upload
 ## Next Steps
 
 ### Immediate
+
 - [x] Backup original code
 - [x] Create modular architecture
 - [x] Implement optimizations
 - [x] Document changes
 
 ### Short Term (Optional)
+
 - [ ] Test optimized version
 - [ ] Measure actual performance
 - [ ] Add unit tests
 - [ ] Profile memory usage
 
 ### Long Term (Future)
+
 - [ ] Add sprite-based rendering
 - [ ] Implement animation effects
 - [ ] Add web configuration
@@ -214,8 +236,8 @@ pio run --target upload
 ## Questions?
 
 The optimized version is production-ready and can be used immediately. Both versions are available:
+
 - `main_original.cpp` - Your working version
 - `main_optimized.cpp` - New modular version
 
 You can switch between them anytime!
-

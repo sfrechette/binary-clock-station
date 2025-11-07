@@ -19,6 +19,7 @@ private:
         int16_t x;
         uint8_t w;
         uint8_t dotR;
+        uint8_t numBits;  // Number of LEDs to display for this column
     };
     
     void drawBCDDigit(uint8_t value, const DigitLayout& layout);

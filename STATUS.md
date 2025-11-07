@@ -1,10 +1,11 @@
-# Binary Clock - Current Status
+# Binary Clock Station - Current Status
 
 ## Status: ✅ OPTIMIZED VERSION APPLIED AND RUNNING
 
 The optimization and modularization effort has been successfully applied! The code now uses a clean, modular architecture with improved memory efficiency and maintainability.
 
 **Current State:**
+
 - ✅ Optimized code successfully compiled and uploaded
 - ✅ All requested features are working:
   - GPIO 0: Toggle time display
@@ -21,18 +22,21 @@ The optimization and modularization effort has been successfully applied! The co
 The current optimized code includes:
 
 ### 1. Modular Architecture
+
 - **config.h**: All configuration constants in one place
 - **BinaryClockDisplay.h/cpp**: Display logic encapsulated in a class
 - **ButtonController.h/cpp**: Button handling with callback system
 - **main.cpp**: Clean, simple orchestration layer
 
 ### 2. Memory Optimizations
+
 - Using `uint8_t` for values < 255
 - Pre-calculated digit layouts (computed once in init)
 - Static const arrays for brightness levels
 - Struct-based state management
 
 ### 3. Code Quality
+
 - Single responsibility principle (each class has one job)
 - Callback-based event handling (no tight coupling)
 - Reduced global variables
@@ -51,10 +55,12 @@ The current optimized code includes:
 ## Memory Usage
 
 **Current Flash/RAM:**
+
 - RAM:   14.0% (45,768 bytes / 327,680 bytes)
 - Flash: 11.3% (739,497 bytes / 6,553,600 bytes)
 
 **Compared to Original:**
+
 - More efficient due to uint8_t usage and pre-calculated layouts
 - Better code organization doesn't impact runtime memory
 - Improved maintainability for future changes
@@ -86,6 +92,7 @@ include/
 ## Next Steps (Optional)
 
 Future enhancements could include:
+
 - Add WiFi reconnection handling
 - Add OTA (Over-The-Air) updates
 - Add configuration web portal

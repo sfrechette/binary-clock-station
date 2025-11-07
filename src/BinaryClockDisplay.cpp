@@ -18,26 +18,32 @@ void BinaryClockDisplay::init() {
     tft.setRotation(1);
     tft.fillScreen(BG_COLOR);
     
-    // Pre-calculate digit layouts
+    // Pre-calculate digit layouts with number of bits needed per column
+    // Column 0: Hours tens (0-2) = 2 bits
+    // Column 1: Hours ones (0-9) = 4 bits
+    // Column 2: Minutes tens (0-5) = 3 bits
+    // Column 3: Minutes ones (0-9) = 4 bits
+    // Column 4: Seconds tens (0-5) = 3 bits
+    // Column 5: Seconds ones (0-9) = 4 bits
     const int totalWidth = (6 * CLOCK_COL_WIDTH) + (2 * CLOCK_GAP_SMALL) + (2 * CLOCK_GAP_LARGE) + (2 * CLOCK_GAP_SMALL);
     int16_t x = (int16_t)((SCREEN_W - totalWidth) / 2);
     
-    digitLayouts[0].x = x; digitLayouts[0].w = CLOCK_COL_WIDTH; digitLayouts[0].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[0].x = x; digitLayouts[0].w = CLOCK_COL_WIDTH; digitLayouts[0].dotR = CLOCK_DOT_RADIUS; digitLayouts[0].numBits = 2;
     x += CLOCK_COL_WIDTH + CLOCK_GAP_SMALL;
     
-    digitLayouts[1].x = x; digitLayouts[1].w = CLOCK_COL_WIDTH; digitLayouts[1].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[1].x = x; digitLayouts[1].w = CLOCK_COL_WIDTH; digitLayouts[1].dotR = CLOCK_DOT_RADIUS; digitLayouts[1].numBits = 4;
     x += CLOCK_COL_WIDTH + CLOCK_GAP_LARGE;
     
-    digitLayouts[2].x = x; digitLayouts[2].w = CLOCK_COL_WIDTH; digitLayouts[2].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[2].x = x; digitLayouts[2].w = CLOCK_COL_WIDTH; digitLayouts[2].dotR = CLOCK_DOT_RADIUS; digitLayouts[2].numBits = 3;
     x += CLOCK_COL_WIDTH + CLOCK_GAP_SMALL;
     
-    digitLayouts[3].x = x; digitLayouts[3].w = CLOCK_COL_WIDTH; digitLayouts[3].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[3].x = x; digitLayouts[3].w = CLOCK_COL_WIDTH; digitLayouts[3].dotR = CLOCK_DOT_RADIUS; digitLayouts[3].numBits = 4;
     x += CLOCK_COL_WIDTH + CLOCK_GAP_LARGE;
     
-    digitLayouts[4].x = x; digitLayouts[4].w = CLOCK_COL_WIDTH; digitLayouts[4].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[4].x = x; digitLayouts[4].w = CLOCK_COL_WIDTH; digitLayouts[4].dotR = CLOCK_DOT_RADIUS; digitLayouts[4].numBits = 3;
     x += CLOCK_COL_WIDTH + CLOCK_GAP_SMALL;
     
-    digitLayouts[5].x = x; digitLayouts[5].w = CLOCK_COL_WIDTH; digitLayouts[5].dotR = CLOCK_DOT_RADIUS;
+    digitLayouts[5].x = x; digitLayouts[5].w = CLOCK_COL_WIDTH; digitLayouts[5].dotR = CLOCK_DOT_RADIUS; digitLayouts[5].numBits = 4;
     
     layoutInitialized = true;
 }
@@ -60,9 +66,12 @@ void BinaryClockDisplay::drawBCDDigit(uint8_t value, const DigitLayout& layout) 
     
     static const uint8_t weights[4] = {8, 4, 2, 1};
     
-    for (uint8_t i = 0; i < 4; i++) {
-        int cy = CLOCK_TOP + i * vSpacing + vSpacing / 2;
-        bool on = (value & weights[i]);
+    // Only draw the number of LEDs needed for this column
+    for (uint8_t i = 0; i < layout.numBits; i++) {
+        // Start from the bottom (least significant bit position)
+        uint8_t bitPos = 4 - layout.numBits + i;
+        int cy = CLOCK_TOP + bitPos * vSpacing + vSpacing / 2;
+        bool on = (value & weights[bitPos]);
         uint16_t color = on ? ON_COLOR : OFF_COLOR;
         tft.fillCircle(cx, cy, layout.dotR, color);
     }

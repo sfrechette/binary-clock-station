@@ -1,1 +1,1 @@
-# binary-clock
+# binary-clock-station
