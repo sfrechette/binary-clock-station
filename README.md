@@ -1,4 +1,4 @@
-# Binary Clock Station
+# Binary Clock Station for T-Diplsay S3
 
 A modern, optimized binary clock implementation for the **LilyGo T-Display-S3** ESP32 board. Displays time in binary format using illuminated dots, with WiFi connectivity for automatic NTP time synchronization.
 
@@ -372,7 +372,8 @@ Each column is a vertical binary number (read from bottom to top):
 
 ```
 Columns:  1   4   :   3   7   :   5   2
-         [0] [4]     [2] [4]     [4] [2]
+         [ ] [0]  :  [ ] [0]  :  [ ] [0] 
+         [ ] [4]     [2] [4]     [4] [2]
          [0] [0]     [1] [2]     [1] [0]
          [1] [0]     [0] [1]     [0] [0]
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
