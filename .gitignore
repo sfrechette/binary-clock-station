@@ -7,6 +7,10 @@
 # Secret credentials
 include/secrets.h
 
+OPTIMIZATION_APPLIED.md
+REFACTOR_SUMMARY.md
+STATUS.md
+
 
 # Keep template files (these should be committed)
 !include/secrets_template.h

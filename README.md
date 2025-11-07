@@ -6,9 +6,10 @@ A modern, optimized binary clock implementation for the **LilyGo T-Display-S3** 
 ![Platform](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🎯 Features
+## Features
 
 ### Core Functionality
+
 - **Binary Time Display**: Visual binary representation of current time (HH:MM:SS)
 - **Optimized LED Layout**: Each column displays only the necessary LEDs for its digit range
   - Hours tens (0-2): 2 LEDs
@@ -21,6 +22,7 @@ A modern, optimized binary clock implementation for the **LilyGo T-Display-S3** 
 - **Timezone Support**: Configurable timezone (default: EST/EDT)
 
 ### User Interface
+
 - **Toggle Time Display** (GPIO 0 / BOOT button): Show/hide decimal time digits below binary display
 - **Brightness Control** (GPIO 14 / IO14 button): Cycle through 6 brightness levels (25, 75, 125, 175, 225, 255)
 - **Clean Visual Design**:
@@ -30,29 +32,33 @@ A modern, optimized binary clock implementation for the **LilyGo T-Display-S3** 
   - No screen flickering
 
 ### Performance
+
 - **Memory Efficient**: Uses only 14% RAM and 11% Flash
 - **Fast Updates**: 100ms polling for responsive display
 - **Smart Rendering**: Only redraws when time changes
 - **Debounced Buttons**: 200ms debounce prevents accidental double-presses
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Hardware Requirements
+
 - **LilyGo T-Display-S3** ESP32-S3 development board
   - 1.9" LCD Display (320x170 ST7789)
   - Built-in buttons (GPIO 0 and GPIO 14)
   - WiFi connectivity
 
 ### Software Requirements
+
 - **PlatformIO** (VS Code extension or CLI)
 - **Git** (for cloning the repository)
 - **USB-C cable** (for uploading firmware)
 
 ### Network Requirements
+
 - WiFi network with internet access (for NTP time sync)
 - WiFi credentials (SSID and password)
 
-## 🚀 Installation
+## Installation
 
 ### 1. Clone the Repository
 
@@ -93,6 +99,7 @@ Edit `src/config.h` to set your timezone:
 ```
 
 Common timezone strings:
+
 - EST/EDT: `"EST5EDT,M3.2.0/2,M11.1.0/2"`
 - PST/PDT: `"PST8PDT,M3.2.0/2,M11.1.0/2"`
 - CST/CDT: `"CST6CDT,M3.2.0/2,M11.1.0/2"`
@@ -101,7 +108,7 @@ Common timezone strings:
 
 ### 4. Build and Upload
 
-#### Using PlatformIO CLI:
+#### Using PlatformIO CLI
 
 ```bash
 # Build the project
@@ -114,7 +121,7 @@ pio run --target upload
 pio device monitor
 ```
 
-#### Using VS Code with PlatformIO:
+#### Using VS Code with PlatformIO
 
 1. Open the project folder in VS Code
 2. Click the PlatformIO icon in the sidebar
@@ -125,13 +132,14 @@ pio device monitor
 ### 5. First Boot
 
 On first boot, the device will:
+
 1. Initialize the display
 2. Connect to WiFi (may take 10-15 seconds)
 3. Synchronize time from NTP servers
 4. Display "Binary Clock" splash screen (1 second)
 5. Start showing binary time
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ### Project Structure
 
@@ -159,6 +167,7 @@ binary-clock-station/
 ### Module Responsibilities
 
 #### `config.h`
+
 - Centralized configuration constants
 - Display dimensions and colors
 - Pin assignments
@@ -166,9 +175,11 @@ binary-clock-station/
 - Brightness levels
 
 #### `BinaryClockDisplay` Class
+
 **Responsibility**: Display rendering and visual management
 
 **Key Methods**:
+
 - `init()`: Initialize display hardware and pre-calculate layouts
 - `drawClock()`: Render binary clock with optional decimal display
 - `setBrightness()`: Adjust backlight brightness
@@ -179,9 +190,11 @@ binary-clock-station/
 **Design Pattern**: Encapsulation of all display-related logic
 
 #### `ButtonController` Class
+
 **Responsibility**: Button input handling with callbacks
 
 **Key Methods**:
+
 - `init()`: Initialize button pins
 - `update()`: Poll button states (call in main loop)
 - `setTimeToggleCallback()`: Register time display toggle handler
@@ -190,16 +203,18 @@ binary-clock-station/
 **Design Pattern**: Observer pattern with callbacks for loose coupling
 
 #### `main.cpp`
+
 **Responsibility**: System orchestration and business logic
 
 **Key Components**:
+
 - WiFi connection management
 - NTP time synchronization
 - Application state management
 - Event handling coordination
 - Main loop execution
 
-## 🔄 Execution Flow
+## Execution Flow
 
 ### Startup Sequence
 
@@ -333,7 +348,7 @@ If showDigits enabled:
 Complete
 ```
 
-## 🎮 Usage
+## Usage
 
 ### Controls
 
@@ -347,6 +362,7 @@ Complete
 The display shows 6 columns representing: `HH : MM : SS`
 
 Each column is a vertical binary number (read from bottom to top):
+
 - Bottom dot = 1
 - Second dot = 2
 - Third dot = 4
@@ -359,8 +375,8 @@ Columns:  1   4   :   3   7   :   5   2
          [0] [4]     [2] [4]     [4] [2]
          [0] [0]     [1] [2]     [1] [0]
          [1] [0]     [0] [1]     [0] [0]
-         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1+4=5      3+7=10      5+2=7
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          1   4       3   7       5   2
 Hours: 1 and 4 = 14 (2:00 PM)
 Minutes: 3 and 7 = 37
 Seconds: 5 and 2 = 52
@@ -372,7 +388,7 @@ Seconds: 5 and 2 = 52
 - **Brightness**: Level 1 (25/255)
 - **Update Rate**: 10 times per second (100ms)
 
-## 🔧 Configuration
+## Configuration
 
 ### Adjustable Parameters in `config.h`
 
@@ -400,7 +416,7 @@ static const uint8_t BRIGHTNESS_VALUES[6] = {25, 75, 125, 175, 225, 255};
 #define NTP_SERVER2 "time.google.com"
 ```
 
-## 📊 Memory Usage
+## Memory Usage
 
 ```
 RAM:   14.0% (45,784 bytes / 327,680 bytes)
@@ -409,67 +425,53 @@ Flash: 11.3% (739,545 bytes / 6,553,600 bytes)
 
 Plenty of room for future enhancements!
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Display doesn't turn on
+
 - Check USB power supply (needs adequate current)
 - Verify `PIN_POWER` and `PIN_BACKLIGHT` definitions
 - Try increasing default brightness in `config.h`
 
 ### WiFi connection fails
+
 - Verify credentials in `secrets.h`
 - Check WiFi signal strength
 - Ensure 2.4GHz WiFi (ESP32 doesn't support 5GHz)
 - Check serial monitor for error messages
 
 ### Time shows "NTP?" error
+
 - WiFi must be connected first
 - Check firewall allows NTP (port 123 UDP)
 - Try different NTP servers in `config.h`
 - Verify internet connectivity
 
 ### Buttons not responding
+
 - Check debounce time (200ms default)
 - Verify pin definitions match your board
 - Try longer press duration
 - Check serial monitor for button events
 
 ### Display flickers
+
 - Shouldn't happen with optimized code
 - If it does, check `TIME_UPDATE_INTERVAL_MS` value
 - Ensure stable power supply
 
-## 🚧 Future Enhancements
+## License
 
-Potential features for future development:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- [ ] WiFi reconnection handling
-- [ ] OTA (Over-The-Air) firmware updates
-- [ ] Web configuration portal
-- [ ] Multiple timezone support
-- [ ] Animation effects on time change
-- [ ] Sleep mode / screen saver
-- [ ] Weather display integration
-- [ ] Configurable color themes
-- [ ] Touch screen support (if available)
+## Acknowledgments
 
-## 📄 License
+- **LILYGO** - T-Display S3 hardware
+- **TFT_eSPI** - Display library
+- **ESP32Time** - Real-time clock management
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Support
 
-## 🙏 Acknowledgments
-
-- **LilyGo** - For the T-Display-S3 hardware
-- **Bodmer** - For the excellent TFT_eSPI library
-- **ESP32 Community** - For extensive documentation and support
-
-## 📞 Support
-
-For issues, questions, or contributions:
-- Open an issue on GitHub
-- Check existing documentation in `/docs` folder
-- Review `STATUS.md` for current development status
+- **Issues**: [GitHub Issues](https://github.com/sfrechette/binary-clock-station/issues)
 
 ---
-
-**Built with ❤️ for the ESP32 community**
