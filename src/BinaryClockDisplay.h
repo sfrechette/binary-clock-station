@@ -29,6 +29,8 @@ private:
     
     DigitLayout digitLayouts[6];
     bool layoutInitialized;
+    uint8_t lastDisplayedDigits[6];  // Track last displayed digits to prevent flicker
+    bool digitsInitialized;
 };
 
 #endif // BINARY_CLOCK_DISPLAY_H

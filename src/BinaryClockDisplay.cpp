@@ -1,7 +1,12 @@
 #include "BinaryClockDisplay.h"
+#include "font18.h"
 
 BinaryClockDisplay::BinaryClockDisplay(TFT_eSPI& display) 
-    : tft(display), layoutInitialized(false) {
+    : tft(display), layoutInitialized(false), digitsInitialized(false) {
+    // Initialize last displayed digits to invalid values
+    for (uint8_t i = 0; i < 6; i++) {
+        lastDisplayedDigits[i] = 255;  // Invalid value to force initial draw
+    }
 }
 
 void BinaryClockDisplay::init() {
@@ -17,6 +22,9 @@ void BinaryClockDisplay::init() {
     tft.init();
     tft.setRotation(1);
     tft.fillScreen(BG_COLOR);
+    
+    // Load custom font for time digits
+    tft.loadFont(font18);
     
     // Pre-calculate digit layouts with number of bits needed per column
     // Column 0: Hours tens (0-2) = 2 bits
@@ -83,13 +91,7 @@ void BinaryClockDisplay::clearTextArea() {
 
 void BinaryClockDisplay::drawTimeDigits(uint8_t hour, uint8_t minute, uint8_t second,
                                        const DigitLayout layouts[6]) {
-    clearTextArea();
-    
-    tft.setTextDatum(MC_DATUM);
-    tft.setTextColor(TEXT_COLOR);
-    
-    // Extract and draw digits with bold effect
-    char buf[2] = {0, 0};
+    // Extract current digits
     uint8_t digits[6];
     digits[0] = (uint8_t)(hour / 10);
     digits[1] = (uint8_t)(hour % 10);
@@ -98,11 +100,39 @@ void BinaryClockDisplay::drawTimeDigits(uint8_t hour, uint8_t minute, uint8_t se
     digits[4] = (uint8_t)(second / 10);
     digits[5] = (uint8_t)(second % 10);
     
-    for (uint8_t i = 0; i < 6; i++) {
-        buf[0] = '0' + digits[i];
-        int cx = layouts[i].x + layouts[i].w / 2;
-        tft.drawString(buf, cx, TEXT_Y_POSITION, 2);
-        tft.drawString(buf, cx + 1, TEXT_Y_POSITION, 2);
+    // Setup font once (already loaded in init())
+    tft.setTextDatum(MC_DATUM);
+    tft.setTextColor(TFT_LIGHTGREY);
+    tft.setTextPadding(0);
+    
+    // First time: clear area and draw all digits
+    if (!digitsInitialized) {
+        clearTextArea();
+        char buf[2] = {0, 0};
+        for (uint8_t i = 0; i < 6; i++) {
+            buf[0] = '0' + digits[i];
+            int cx = layouts[i].x + layouts[i].w / 2;
+            tft.drawString(buf, cx, TEXT_Y_POSITION);
+            lastDisplayedDigits[i] = digits[i];
+        }
+        digitsInitialized = true;
+    } else {
+        // Only update digits that changed (use padding to erase old text smoothly)
+        tft.setTextPadding(12);  // Padding width to cover old digit
+        char buf[2] = {0, 0};
+        for (uint8_t i = 0; i < 6; i++) {
+            if (digits[i] != lastDisplayedDigits[i]) {
+                int cx = layouts[i].x + layouts[i].w / 2;
+                
+                // Draw new digit with background padding (automatically erases old)
+                buf[0] = '0' + digits[i];
+                tft.setTextColor(TFT_LIGHTGREY, BG_COLOR);
+                tft.drawString(buf, cx, TEXT_Y_POSITION);
+                
+                lastDisplayedDigits[i] = digits[i];
+            }
+        }
+        tft.setTextPadding(0);  // Reset padding
     }
 }
 
@@ -128,6 +158,13 @@ void BinaryClockDisplay::drawClock(uint8_t hour, uint8_t minute, uint8_t second,
     if (showDigits) {
         drawTimeDigits(hour, minute, second, digitLayouts);
     } else {
-        clearTextArea();
+        // Reset digits tracking when hiding
+        if (digitsInitialized) {
+            clearTextArea();
+            digitsInitialized = false;
+            for (uint8_t i = 0; i < 6; i++) {
+                lastDisplayedDigits[i] = 255;  // Reset to invalid
+            }
+        }
     }
 }

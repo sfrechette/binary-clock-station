@@ -6,6 +6,7 @@
 #include "config.h"
 #include "BinaryClockDisplay.h"
 #include "ButtonController.h"
+#include "font18.h"
 
 // ==================== GLOBAL OBJECTS ====================
 TFT_eSPI tft;
@@ -88,12 +89,16 @@ void setup() {
     connectWiFi();
     initTime();
     
-    // Show startup message
+    // Show startup message (unload custom font to use built-in font)
+    tft.unloadFont();  // Unload font18 to use built-in fonts
     tft.setTextDatum(MC_DATUM);
     tft.setTextColor(TEXT_COLOR, BG_COLOR);
-    tft.drawString("Binary Clock", SCREEN_W/2, SCREEN_H/2 - 10, 4);
+    tft.drawString("Binary Clock Station", SCREEN_W/2, SCREEN_H/2 - 10, 4);
     delay(1000);
     tft.fillScreen(BG_COLOR);
+    
+    // Reload font18 for time digits display
+    tft.loadFont(font18);
     
     Serial.println("=== Binary Clock Ready ===");
     Serial.println("GPIO 0: Toggle time display");
