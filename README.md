@@ -2,7 +2,7 @@
 
 A modern, optimized binary clock implementation for the **LILYGO T-Display-S3** ESP32 board. Displays time in binary format using illuminated dots, with WiFi connectivity for automatic NTP time synchronization.
 
-![Hardware](https://img.shields.io/static/v1?label=Hardware&message=LilyGO%20T-Display%20S3&color=red)
+![Hardware](https://img.shields.io/static/v1?label=Hardware&message=LILYGO%20T-Display%20S3&color=red)
 ![ESP32-S3](https://img.shields.io/badge/ESP32-S3-blue)
 ![Platform](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
