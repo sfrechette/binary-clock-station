@@ -46,7 +46,7 @@ A modern, optimized binary clock implementation for the **LILYGO T-Display-S3** 
 
 ### Hardware Requirements
 
-- **LilyGo T-Display-S3** ESP32-S3 development board
+- **LILYGO T-Display-S3** ESP32-S3 development board
   - 1.9" LCD Display (320x170 ST7789)
   - Built-in buttons (GPIO 0 and GPIO 14)
   - WiFi connectivity
@@ -427,8 +427,6 @@ static const uint8_t BRIGHTNESS_VALUES[6] = {25, 75, 125, 175, 225, 255};
 RAM:   14.0% (45,784 bytes / 327,680 bytes)
 Flash: 11.3% (739,545 bytes / 6,553,600 bytes)
 ```
-
-Plenty of room for future enhancements!
 
 ## Troubleshooting
 
