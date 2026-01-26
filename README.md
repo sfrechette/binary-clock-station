@@ -7,8 +7,8 @@ A modern, optimized binary clock implementation for the **LILYGO T-Display-S3** 
 ![Platform](https://img.shields.io/badge/Platform-PlatformIO-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-<img src="docs/images/binary-clock-station01.JPEG" alt="LILYGO T-Display-S3 Display" />
-<img src="docs/images/binary-clock-station02.JPEG" alt="LILYGO T-Display-S3 Display" />
+<img src="docs/images/binary-clock-station01.JPEG" alt="LILYGO T-Display-S3 Display" width="400" />
+<img src="docs/images/binary-clock-station02.JPEG" alt="LILYGO T-Display-S3 Display" width="400" />
 
 ## Features
 
